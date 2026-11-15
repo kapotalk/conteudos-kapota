@@ -1,0 +1,146 @@
+/* Materiais (conteudos.kapota.com.br): apresentação em etapas na identidade Virada.
+   As páginas mantêm as classes que já tinham (step, card, tip, chip, bar...) e ganham o
+   visual aqui, sempre dentro de body.mt. Depende de tokens.css e kapota.css.
+   Uma etapa por vez; js/material.js faz a navegação. Modelo em materiais/modelo.html. */
+
+.mt { background: var(--kp-bg); color: var(--kp-fg); }
+.mt .app { position: relative; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+.mt-brilho {
+  position: absolute; inset: -30% -20% auto auto; width: 75vmax; height: 75vmax; pointer-events: none; z-index: 0;
+  background: radial-gradient(closest-side, var(--kp-brasa-brilho), transparent 70%);
+  opacity: 0.4; transform: translate(30%, -15%);
+}
+
+/* ---------- Topo: marca, etapas (computador) ou contador (celular), progresso ---------- */
+.mt header { position: relative; z-index: 20; flex: none; background: rgba(10, 10, 10, 0.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.mt .header-row { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 clamp(16px, 3vw, 28px); }
+.mt .header-row .kp-marca { flex: none; font-size: 1.12rem; gap: 10px; }
+.mt .header-row .kp-marca__simbolo { width: 30px; height: 30px; font-size: 0.95rem; }
+
+.mt nav.steps { display: none; gap: 4px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.mt nav.steps::-webkit-scrollbar { display: none; }
+.mt nav.steps button {
+  flex: none; display: inline-flex; align-items: center; gap: 8px; height: 34px; min-width: 40px; justify-content: center; padding: 0 12px;
+  border-radius: var(--kp-r-pilula); font-size: 0.82rem; color: var(--kp-fg-2); white-space: nowrap;
+  transition: background var(--kp-d-1), color var(--kp-d-1);
+}
+.mt nav.steps button .n { font-family: var(--kp-fonte-mono); font-size: 0.68rem; letter-spacing: 0.06em; opacity: 0.6; }
+.mt nav.steps button .t { display: none; }
+.mt nav.steps button.active .t { display: inline; }
+.mt nav.steps button:hover:not(:disabled) { background: var(--kp-bg-2); color: var(--kp-fg); }
+.mt nav.steps button.active { background: var(--kp-brasa); color: var(--kp-preto); }
+.mt nav.steps button.active .n { opacity: 0.7; }
+.mt nav.steps button:disabled { cursor: default; opacity: 0.32; }
+
+.mt .step-mobile { min-width: 0; text-align: right; }
+.mt .step-mobile .count { font-family: var(--kp-fonte-mono); font-size: var(--kp-t-micro); letter-spacing: 0.14em; text-transform: uppercase; color: var(--kp-fg-2); }
+.mt .step-mobile .label { margin-top: 2px; font-weight: 500; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 900px) {
+  .mt nav.steps { display: flex; }
+  .mt .step-mobile { display: none; }
+}
+
+.mt .progress-track { height: 2px; background: var(--kp-linha); }
+.mt .progress-fill { height: 100%; width: 0; background: var(--kp-brasa); transition: width var(--kp-d-3) var(--kp-curva-virada); }
+
+/* ---------- Palco: uma etapa por vez ---------- */
+.mt .scroller { position: relative; z-index: 1; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.mt .step { display: none; min-height: 100%; }
+.mt .step.active { display: block; animation: mt-entra 700ms var(--kp-curva-saida) both; }
+.mt .step.step-center.active { display: flex; flex-direction: column; justify-content: center; }
+@keyframes mt-entra { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+
+.mt .wrap { width: 100%; max-width: 840px; margin: 0 auto; padding: clamp(36px, 6vw, 72px) clamp(16px, 4vw, 40px) 120px; }
+.mt .step-center .wrap { padding-top: 32px; }
+
+.mt .eyebrow {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px;
+  font-family: var(--kp-fonte-mono); font-size: var(--kp-t-micro); letter-spacing: 0.14em; text-transform: uppercase; color: var(--kp-fg-2);
+}
+.mt .eyebrow::before { content: ""; flex: none; width: 8px; height: 8px; background: var(--kp-brasa); }
+
+.mt .step h1, .mt .step h2 {
+  font-family: var(--kp-fonte-display); font-weight: 700; letter-spacing: -0.035em; line-height: 1.02;
+  max-width: 20ch; margin-bottom: 24px; text-wrap: balance;
+}
+.mt .step h1 { font-size: clamp(2.5rem, 6.4vw, 4.6rem); font-weight: 800; letter-spacing: -0.045em; line-height: 0.96; }
+.mt .step h2 { font-size: clamp(1.9rem, 4.4vw, 3.1rem); }
+.mt .step .lede { font-size: clamp(1.05rem, 1.5vw, 1.2rem); line-height: 1.6; color: var(--kp-fg-2); max-width: 58ch; margin-bottom: 8px; }
+.mt .accent { color: var(--kp-acento-texto); }
+
+/* ---------- Cartões ---------- */
+.mt .card {
+  position: relative; margin-top: 20px; padding: clamp(22px, 3vw, 30px);
+  border-radius: var(--kp-r-3); background: var(--kp-bg-2); box-shadow: inset 0 0 0 1px var(--kp-linha);
+}
+.mt .card + .card { margin-top: 14px; }
+.mt .card-label { margin-bottom: 12px; font-family: var(--kp-fonte-mono); font-size: var(--kp-t-micro); letter-spacing: 0.14em; text-transform: uppercase; color: var(--kp-acento-texto); }
+.mt .card h3 { margin-bottom: 10px; font-family: var(--kp-fonte-display); font-weight: 700; font-size: clamp(1.2rem, 2vw, 1.45rem); line-height: 1.15; letter-spacing: -0.02em; }
+.mt .card p { font-size: 1rem; line-height: 1.6; color: var(--kp-fg-2); }
+.mt .card .owners { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--kp-linha); font-size: 0.95rem; line-height: 1.55; color: var(--kp-fg-2); }
+.mt .card .owners b { color: var(--kp-fg); font-weight: 600; }
+
+.mt .grid-2 { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 20px; }
+.mt .grid-2 .card { margin-top: 0; }
+@media (min-width: 700px) { .mt .grid-2 { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Barra de divisão (ex.: 85% / 15%) ---------- */
+.mt .bar-block { margin-top: 32px; }
+.mt .bar-title { margin-bottom: 14px; font-family: var(--kp-fonte-display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; }
+.mt .bar { display: flex; gap: 2px; width: 100%; height: 56px; border-radius: var(--kp-r-2); overflow: hidden; }
+.mt .bar > div { display: flex; align-items: center; justify-content: center; padding: 0 8px; min-width: 0; white-space: nowrap; font-family: var(--kp-fonte-display); font-weight: 700; font-size: 0.92rem; color: var(--kp-preto); }
+.mt .bar .b1 { background: var(--kp-brasa); }
+.mt .bar .b2 { background: var(--kp-papel); }
+.mt .bar-caption { margin-top: 14px; font-size: 0.95rem; line-height: 1.6; color: var(--kp-fg-2); }
+.mt .bar-source { margin-top: 14px; font-family: var(--kp-fonte-mono); font-size: var(--kp-t-micro); letter-spacing: 0.08em; color: var(--kp-fg-2); }
+
+/* ---------- Selos (ex.: as 7 associações) ---------- */
+.mt .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.mt .chip {
+  padding: 10px 16px; border-radius: var(--kp-r-pilula); background: var(--kp-bg-2); box-shadow: inset 0 0 0 1px var(--kp-linha-forte);
+  font-family: var(--kp-fonte-mono); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--kp-fg);
+}
+
+/* ---------- Resumo numerado ---------- */
+.mt .tip { display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 16px; padding: 22px 0; border-top: 1px solid var(--kp-linha); }
+.mt .tip:first-of-type { border-top: 0; padding-top: 8px; }
+.mt .tip .num { font-family: var(--kp-fonte-display); font-weight: 800; font-size: 2rem; line-height: 1; letter-spacing: -0.04em; color: var(--kp-brasa); }
+.mt .tip h4 { margin-bottom: 6px; font-family: var(--kp-fonte-display); font-weight: 600; font-size: 1.15rem; letter-spacing: -0.01em; line-height: 1.25; }
+.mt .tip p { font-size: 0.98rem; line-height: 1.55; color: var(--kp-fg-2); }
+
+/* ---------- Fechamento ---------- */
+.mt .closing { text-align: center; }
+.mt .closing .eyebrow { justify-content: center; }
+.mt .closing h2 { margin-inline: auto; }
+.mt .closing .lede { margin: 0 auto 36px; }
+.mt-acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+/* ---------- Rodapé: voltar, o que vem a seguir, continuar ---------- */
+.mt .footer-bar { position: relative; z-index: 20; flex: none; }
+.mt .footer-fade { height: 72px; margin-bottom: -72px; background: linear-gradient(to top, var(--kp-bg), transparent); pointer-events: none; }
+.mt .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--kp-bg); padding: 12px clamp(16px, 3vw, 28px) calc(16px + env(safe-area-inset-bottom)); }
+.mt .btn-back {
+  flex: none; width: 52px; height: 52px; display: grid; place-items: center; border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--kp-linha-forte); color: var(--kp-fg);
+  transition: background var(--kp-d-1), color var(--kp-d-1), opacity var(--kp-d-2);
+}
+.mt .btn-back:hover { background: var(--kp-fg); color: var(--kp-bg); }
+.mt .btn-back:disabled { opacity: 0; pointer-events: none; }
+.mt .footer-mid { display: none; flex: 1; min-width: 0; text-align: center; font-family: var(--kp-fonte-mono); font-size: var(--kp-t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--kp-fg-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 700px) { .mt .footer-mid { display: block; } }
+.mt .btn-next {
+  flex: none; height: 52px; min-width: 156px; display: inline-flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 0 11px 0 24px; border-radius: var(--kp-r-pilula); background: var(--kp-brasa); color: var(--kp-preto);
+  font-family: var(--kp-fonte-display); font-weight: 700; font-size: 0.95rem; transition: transform var(--kp-d-1);
+}
+.mt .btn-next .mt-seta { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--kp-preto); color: var(--kp-brasa); transition: transform var(--kp-d-2) var(--kp-curva-virada); }
+.mt .btn-next:hover .mt-seta { transform: translateX(3px); }
+.mt .btn-next:active { transform: scale(0.97); }
+.mt svg.icon { width: 17px; height: 17px; }
+
+.mt button:focus-visible, .mt a:focus-visible { outline: 2px solid var(--kp-brasa); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mt .step.active { animation: none; }
+  .mt .progress-fill, .mt .btn-next .mt-seta { transition: none; }
+}
