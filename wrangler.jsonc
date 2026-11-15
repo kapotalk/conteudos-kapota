@@ -1,8 +1,11 @@
-// conteudos.kapota.com.br na Cloudflare (Worker só com arquivos estáticos), desde 15/11/2026.
+// conteudos.kapota.com.br na Cloudflare (Worker com os arquivos estáticos), desde 15/11/2026.
 // Antes era GitHub Pages. Cada material é uma pasta com index.html, aberta em /<pasta>/.
+// Página inicial e endereço errado vão pro kapota.com.br (worker.js, que só roda quando
+// nenhum arquivo responde).
 // Publicar: npx wrangler@4 deploy (o deploy cria o endereço sozinho, custom domain).
 {
   "name": "kapota-conteudos",
+  "main": "worker.js",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./",
