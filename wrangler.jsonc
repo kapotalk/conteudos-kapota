@@ -1,7 +1,8 @@
 // conteudos.kapota.com.br na Cloudflare (Worker com os arquivos estáticos), desde 15/11/2026.
 // Antes era GitHub Pages. Cada material é uma pasta com index.html, aberta em /<pasta>/.
-// Página inicial e endereço errado vão pro kapota.com.br (worker.js, que só roda quando
-// nenhum arquivo responde).
+// O worker.js responde antes dos arquivos: mostra o cadastro pra quem ainda não liberou o
+// aparelho e manda página inicial e endereço errado pro kapota.com.br. Os cadastros ficam no
+// banco do sistema de audiência, pelo Worker da newsletter (binding AUDIENCIA).
 // Publicar: npx wrangler@4 deploy (o deploy cria o endereço sozinho, custom domain).
 {
   "name": "kapota-conteudos",
@@ -9,9 +10,13 @@
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none"
+    "not_found_handling": "none",
+    "run_worker_first": true
   },
+  "services": [{ "binding": "AUDIENCIA", "service": "kapota-newsletter", "entrypoint": "Materiais" }],
+  "observability": { "enabled": true },
   "routes": [{ "pattern": "conteudos.kapota.com.br", "custom_domain": true }],
   "workers_dev": false,
   "preview_urls": false

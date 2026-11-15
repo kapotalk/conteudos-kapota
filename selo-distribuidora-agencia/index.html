@@ -48,6 +48,24 @@
         <div class="eyebrow">Material completo</div>
         <h1>Sete papéis, sete funções diferentes.</h1>
         <p class="lede">Selo, gravadora, coprodutor, distribuidora, agregadora, editora e agência. Entender a função de cada uma te ajuda a evitar assinar contrato achando que é outro.</p>
+<!-- CADASTRO:INICIO (tela de entrada: o Worker do conteudos mostra só pra quem ainda não se cadastrou naquele aparelho; no mock, abra com ?trancado) -->
+        <form class="mt-cadastro" data-mt-cadastro novalidate hidden>
+          <p class="mt-cadastro__titulo">Material gratuito. Deixa seu contato pra liberar.</p>
+          <div class="mt-cadastro__campos">
+            <label class="mt-campo"><span>Nome</span><input name="nome" autocomplete="name" maxlength="80" placeholder="Seu nome" required></label>
+            <label class="mt-campo"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="200" placeholder="voce@email.com" required></label>
+            <label class="mt-campo"><span>WhatsApp</span><input name="whatsapp" type="tel" autocomplete="tel-national" inputmode="tel" maxlength="20" placeholder="(83) 99999-9999" required></label>
+          </div>
+          <label class="mt-check"><input type="checkbox" name="newsletter"><span>Quero receber no email o resumo da semana da Leitura de Mercado.</span></label>
+          <div class="mt-mel" aria-hidden="true"><label>Site <input name="site" tabindex="-1" autocomplete="off"></label></div>
+          <button class="kp-btn" type="submit">
+            <span class="kp-btn__texto"><span>Liberar o material</span><span aria-hidden="true">Liberar o material</span></span>
+            <span class="kp-btn__seta" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span>
+          </button>
+          <p class="mt-cadastro__erro" role="alert" data-mt-erro></p>
+          <p class="mt-cadastro__lgpd">Ao liberar o material, você autoriza o Klysman Kley a guardar seu nome, email e WhatsApp pra te mandar este e outros conteúdos. Seus dados não são vendidos nem passados pra ninguém. Pra sair da lista ou apagar seus dados, é só pedir pelo <a href="https://kapota.com.br/#contato">kapota.com.br</a>.</p>
+        </form>
+<!-- CADASTRO:FIM -->
       </div>
     </section>
 
