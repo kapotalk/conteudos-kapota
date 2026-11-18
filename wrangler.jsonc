@@ -3,7 +3,8 @@
 // O worker.js responde antes dos arquivos: mostra o cadastro pra quem ainda não liberou o
 // aparelho e manda página inicial e endereço errado pro kapota.com.br. Os cadastros ficam no
 // banco do sistema de audiência, pelo Worker da newsletter (binding AUDIENCIA).
-// Publicar: npx wrangler@4 deploy (o deploy cria o endereço sozinho, custom domain).
+// Publicar: push na main (workflow .github/workflows/publicar.yml, desde 18/11/2026). À mão: npx wrangler@4 deploy.
+// O deploy cria o endereço sozinho (custom domain).
 {
   "name": "kapota-conteudos",
   "main": "worker.js",
